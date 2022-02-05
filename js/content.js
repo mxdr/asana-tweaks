@@ -8,13 +8,11 @@ async function docReady(fn) {
   }
 }
 
-
 async function loadOptions() {
   chrome.storage.sync.get("enabledOptions", (data) => {
     let enabledOptions = data.enabledOptions || []
 
     for (let enabledOption of enabledOptions) {
-      console.log('enabledOption', enabledOption)
       document.body.classList.add("tweak-" + enabledOption);
     }
   })
