@@ -6,12 +6,48 @@ async function docReady(fn) {
   }
 }
 
-async function handleChange(event) {
-  const option = event.target.dataset.option
-  let enabledOptions = await chrome.storage.sync.get("enabledOptions").enabledOptions || []
+async function getAsanaTabs() {
+  tabs = await chrome.tabs.query({})
+  if (!tabs) return []
 
-  if (event.target.checked) enabledOptions.push(option)
-  else enabledOptions.pop(option)
+  console.log('tabs1', tabs)
+
+  let returnTabs = []
+
+  for (let tab of tabs) {
+    let url = new URL(tab.url)
+    if (url.hostname == "app.asana.com") returnTabs.push(tab)
+  }
+
+  return returnTabs
+}
+
+async function toggleAsanaClass(value, option) {
+  if (value == 'on') func = (option) => document.body.classList.add(`tweak-${option}`)
+  else func = (option) => document.body.classList.remove(`tweak-${option}`)
+
+  let tabs = await getAsanaTabs()
+
+  console.log('tabs', tabs)
+
+  for (let tab of tabs) chrome.scripting.executeScript({
+    target: { tabId: tab.id },
+    func,
+    args: [ option ],
+  })
+}
+
+async function handleChange(event) {
+  let enabledOptions = await chrome.storage.sync.get("enabledOptions").enabledOptions || []
+  const option = event.target.dataset.option
+
+  if (event.target.checked) {
+    enabledOptions.push(option)
+    toggleAsanaClass('on', option)
+  } else {
+    enabledOptions.pop(option)
+    toggleAsanaClass('off', option)
+  }
 
   chrome.storage.sync.set({ enabledOptions })
 }
@@ -30,6 +66,8 @@ docReady(async function () {
 
       let checkbox = toggle.firstElementChild
       let option = checkbox.dataset.option
+
+      console.log('enabledOptions', enabledOptions)
 
       if (enabledOptions.includes(option)) {
         toggle.classList.add("notransition")
