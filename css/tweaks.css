@@ -1,3 +1,7 @@
 body.tweak-hidePopups .ToastNotificationContent {
     display: none;
 }
+
+body.tweak-hideLogo .SidebarHeader-asanaLogo {
+    display: none;
+}
