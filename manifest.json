@@ -1,0 +1,27 @@
+{
+  "name": "Asana Tweaks",
+  "description": "Asana doesn't get everything right.",
+  "version": "1.0",
+  "manifest_version": 3,
+  "permissions": ["storage", "activeTab", "scripting"],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "/images/asana-tweaks-16.png",
+      "32": "/images/asana-tweaks-32.png",
+      "48": "/images/asana-tweaks-48.png",
+      "128": "/images/asana-tweaks-128.png"
+    }
+  },
+  "content_scripts": [{
+    "css": ["css/tweaks.css"],
+    "js": ["js/content.js"],
+    "matches": ["https://app.asana.com/*"]
+  }],
+  "icons": {
+    "16": "/images/asana-tweaks-16.png",
+    "32": "/images/asana-tweaks-32.png",
+    "48": "/images/asana-tweaks-48.png",
+    "128": "/images/asana-tweaks-128.png"
+  }
+}
