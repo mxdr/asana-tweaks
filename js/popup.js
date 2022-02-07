@@ -1,16 +1,11 @@
 async function docReady(fn) {
-  if (document.readyState === "complete" || document.readyState === "interactive") {
-    setTimeout(fn, 1)
-  } else {
-    document.addEventListener("DOMContentLoaded", fn)
-  }
+  if (document.readyState === "complete" || document.readyState === "interactive") setTimeout(fn, 1)
+  else document.addEventListener("DOMContentLoaded", fn)
 }
 
 async function getAsanaTabs() {
   tabs = await chrome.tabs.query({})
   if (!tabs) return []
-
-  console.log('tabs1', tabs)
 
   let returnTabs = []
 
@@ -23,17 +18,15 @@ async function getAsanaTabs() {
 }
 
 async function toggleAsanaClass(value, option) {
-  if (value == 'on') func = (option) => document.body.classList.add(`tweak-${option}`)
+  if (value == "on") func = (option) => document.body.classList.add(`tweak-${option}`)
   else func = (option) => document.body.classList.remove(`tweak-${option}`)
 
   let tabs = await getAsanaTabs()
 
-  console.log('tabs', tabs)
-
   for (let tab of tabs) chrome.scripting.executeScript({
     target: { tabId: tab.id },
     func,
-    args: [ option ],
+    args: [option],
   })
 }
 
@@ -43,10 +36,10 @@ async function handleChange(event) {
 
   if (event.target.checked) {
     enabledOptions.push(option)
-    toggleAsanaClass('on', option)
+    toggleAsanaClass("on", option)
   } else {
     enabledOptions.pop(option)
-    toggleAsanaClass('off', option)
+    toggleAsanaClass("off", option)
   }
 
   chrome.storage.sync.set({ enabledOptions })
@@ -66,8 +59,6 @@ docReady(async function () {
 
       let checkbox = toggle.firstElementChild
       let option = checkbox.dataset.option
-
-      console.log('enabledOptions', enabledOptions)
 
       if (enabledOptions.includes(option)) {
         toggle.classList.add("notransition")
