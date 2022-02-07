@@ -1,5 +1,5 @@
 async function docReady(fn) {
-  if (document.readyState === "complete" || document.readyState === "interactive") setTimeout(fn, 1)
+  if (["complete", "interactive"].includes(document.readyState)) setTimeout(fn, 1)
   else document.addEventListener("DOMContentLoaded", fn)
 }
 

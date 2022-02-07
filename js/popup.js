@@ -1,5 +1,5 @@
 async function docReady(fn) {
-  if (document.readyState === "complete" || document.readyState === "interactive") setTimeout(fn, 1)
+  if (["complete", "interactive"].includes(document.readyState)) setTimeout(fn, 1)
   else document.addEventListener("DOMContentLoaded", fn)
 }
 
@@ -45,15 +45,14 @@ async function handleChange(event) {
   chrome.storage.sync.set({ enabledOptions })
 }
 
-docReady(async function () {
+docReady(async () => {
   chrome.storage.sync.get("enabledOptions", (data) => {
     for (let toggle of document.getElementsByClassName("switch")) {
       toggle.addEventListener("change", handleChange)
       let enabledOptions = data.enabledOptions
 
       if (!enabledOptions) {
-        enabledOptions = []
-        chrome.storage.sync.set({ enabledOptions })
+        chrome.storage.sync.set({ enabledOptions: [] })
         break
       }
 
