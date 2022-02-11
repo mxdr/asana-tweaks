@@ -1,5 +1,7 @@
+const TIMEOUT_TRIGGERS = ["complete", "interactive"]
+
 async function docReady(fn) {
-  if (["complete", "interactive"].includes(document.readyState)) setTimeout(fn, 1)
+  if (TIMEOUT_TRIGGERS.includes(document.readyState)) setTimeout(fn, 1)
   else document.addEventListener("DOMContentLoaded", fn)
 }
 

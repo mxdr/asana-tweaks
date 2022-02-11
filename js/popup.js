@@ -1,17 +1,20 @@
+const HOSTNAME = "app.asana.com"
+const TIMEOUT_TRIGGERS = ["complete", "interactive"]
+
 async function docReady(fn) {
-  if (["complete", "interactive"].includes(document.readyState)) setTimeout(fn, 1)
+  if (TIMEOUT_TRIGGERS.includes(document.readyState)) setTimeout(fn, 1)
   else document.addEventListener("DOMContentLoaded", fn)
 }
 
 async function getAsanaTabs() {
-  tabs = await chrome.tabs.query({})
+  let tabs = await chrome.tabs.query({})
   if (!tabs) return []
 
   let returnTabs = []
 
   for (let tab of tabs) {
     let url = new URL(tab.url)
-    if (url.hostname == "app.asana.com") returnTabs.push(tab)
+    if (url.hostname == HOSTNAME) returnTabs.push(tab)
   }
 
   return returnTabs
@@ -32,7 +35,7 @@ async function toggleAsanaClass(value, option) {
 
 async function handleChange(event) {
   let enabledOptions = await chrome.storage.sync.get("enabledOptions").enabledOptions || []
-  const option = event.target.dataset.option
+  let { option } = event.target.dataset
 
   if (event.target.checked) {
     enabledOptions.push(option)
@@ -49,7 +52,7 @@ docReady(async () => {
   chrome.storage.sync.get("enabledOptions", (data) => {
     for (let toggle of document.getElementsByClassName("switch")) {
       toggle.addEventListener("change", handleChange)
-      let enabledOptions = data.enabledOptions
+      let { enabledOptions } = data
 
       if (!enabledOptions) {
         chrome.storage.sync.set({ enabledOptions: [] })
@@ -57,7 +60,7 @@ docReady(async () => {
       }
 
       let checkbox = toggle.firstElementChild
-      let option = checkbox.dataset.option
+      let { option } = checkbox.dataset
 
       if (enabledOptions.includes(option)) {
         toggle.classList.add("notransition")
