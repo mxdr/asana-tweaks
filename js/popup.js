@@ -4,7 +4,7 @@ async function docReady(fn) {
 }
 
 async function getAsanaTabs() {
-  tabs = await chrome.tabs.query({})
+  const tabs = await chrome.tabs.query({})
   if (!tabs) return []
 
   let returnTabs = []
@@ -31,7 +31,9 @@ async function toggleAsanaClass(value, option) {
 }
 
 async function handleChange(event) {
-  let enabledOptions = await chrome.storage.sync.get("enabledOptions").enabledOptions || []
+  const storage = await chrome.storage.sync.get("enabledOptions")
+  let enabledOptions = storage.enabledOptions
+
   const option = event.target.dataset.option
 
   if (event.target.checked) {
