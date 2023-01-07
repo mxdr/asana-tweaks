@@ -1,7 +1,17 @@
-body.tweak-hidePopups .ToastNotificationContent {
-    display: none;
+body.tweak-hidePopups .ToastManager {
+    display: none !important;
+    opacity: 0 !important;
 }
 
 body.tweak-hideLogo .SidebarHeader-asanaLogo {
-    display: none;
+    display: none !important;
+}
+
+body.tweak-hideUnicorns .DecorativeModalLayer,
+body.tweak-hideUnicorns .CreatureCelebrationOverlay,
+body.tweak-hideUnicorns .HiddenCreatureCelebration,
+body.tweak-hideUnicorns .CreatureCelebrationOverlay-creature,
+body.tweak-hideUnicorns .HiddenCreatureCelebration.HiddenCreatureCelebration {
+    display: none !important;
+    opacity: 0 !important;
 }
