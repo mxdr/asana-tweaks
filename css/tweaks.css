@@ -1,4 +1,5 @@
-body.tweak-hidePopups .ToastManager {
+body.tweak-hidePopups .ToastManager,
+body.tweak-hidePopups .ToastStateManager-groups {
     display: none !important;
     opacity: 0 !important;
 }
@@ -14,4 +15,29 @@ body.tweak-hideUnicorns .CreatureCelebrationOverlay-creature,
 body.tweak-hideUnicorns .HiddenCreatureCelebration.HiddenCreatureCelebration {
     display: none !important;
     opacity: 0 !important;
+}
+
+
+body.tweak-compactTimeline .PortfolioTimelineGroupSidebarHeader,
+body.tweak-compactTimeline .PortfolioTimelineGroup {
+    height: 30px !important;
+    padding: 5px 0 !important;
+}
+
+body.tweak-compactTimeline .MultilineRowMetadataStructure-rightChildren {
+    margin: 6px 5px !important;
+}
+body.tweak-compactTimeline .ProjectCell,
+body.tweak-compactTimeline .PortfolioTimelineGroup-projectCell {
+    height: 30px !important;
+    top: 5px !important;
+}
+
+body.tweak-compactTimeline .MultilineRowMetadataStructure-metadata,
+body.tweak-compactTimeline .ChipWithIcon {
+    display: none !important;
+}
+
+body.tweak-compactTimeline .PortfolioTimelineCanvas {
+    height: auto !important;
 }
